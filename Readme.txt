@@ -9,7 +9,6 @@
 ===================
  (1) 改善IP輸入方式（會自動跳格、彈出數字鍵盤）
  (2) 加大calculator按鈕
- (3) server增加scroll panel
 
 3. How to Execute
 ==================
