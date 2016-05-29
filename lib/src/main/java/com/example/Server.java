@@ -1,15 +1,14 @@
 package com.example;
 
-import java.awt.Dimension;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.awt.*;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JLabel;
+
 
 /**
  * Created by Gary on 16/5/28.
@@ -18,23 +17,26 @@ public class Server extends JFrame implements Runnable{
     private Thread thread;
     private ServerSocket servSock;
     private InetAddress IP;
-    private JTextArea textArea;
+    private JLabel label0, label1;
 
     public static void main(String[] args){
         Server obj = new Server();
     }
 
     private void GUI(){
-        textArea = new JTextArea();
-        JScrollPane scrollPane = new JScrollPane(this.textArea);
-        textArea.setEditable(false);
-        textArea.setPreferredSize(new Dimension(500, 550));
+        label0 = new JLabel();
+        label1 = new JLabel();
+        label0.setFont(new Font(label0.getFont().getName(), Font.PLAIN, 15));
+        label1.setFont(new Font(label0.getFont().getName(), Font.PLAIN, 15));
+        label0.setBounds (5, 5, 300, 40);
+        label1.setBounds(5, 45, 300, 40);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(scrollPane);
-        this.setSize(400, 300);
+        this.setSize(400, 100);
         this.setVisible(true);
-        textArea.append("IP of my system is : " + IP.getHostAddress() + "\n");
+        this.add(label0);
+        this.add(label1);
+        label0.setText("IP of my system is : " + IP.getHostAddress() + "\n");
     }
 
     public Server(){
@@ -68,7 +70,6 @@ public class Server extends JFrame implements Runnable{
                 // After client connected, create client socket connect with client
                 Socket clntSock = servSock.accept();
                 InputStream in = clntSock.getInputStream();
-                textArea.append("Connected!!\n");
                 System.out.println("Connected!!");
 
                 // Transfer data
@@ -78,7 +79,7 @@ public class Server extends JFrame implements Runnable{
                     length = in.read(b);
                     String s = new String(b);
                     System.out.println("[Server Said]" + s);
-                    textArea.append("The result from App is " + s);
+                    label1.setText("The result from App is " + s);
                 }
             }
             catch(Exception e){
